@@ -1,0 +1,9 @@
+C:\src\PlateTracker\PlateTracker\PlateTracker.data\bin\Debug\netstandard2.0\PlateTracker.data.deps.json
+C:\src\PlateTracker\PlateTracker\PlateTracker.data\bin\Debug\netstandard2.0\PlateTracker.data.dll
+C:\src\PlateTracker\PlateTracker\PlateTracker.data\bin\Debug\netstandard2.0\PlateTracker.data.pdb
+C:\src\PlateTracker\PlateTracker\PlateTracker.data\obj\Debug\netstandard2.0\PlateTracker.data.csprojAssemblyReference.cache
+C:\src\PlateTracker\PlateTracker\PlateTracker.data\obj\Debug\netstandard2.0\PlateTracker.data.AssemblyInfoInputs.cache
+C:\src\PlateTracker\PlateTracker\PlateTracker.data\obj\Debug\netstandard2.0\PlateTracker.data.AssemblyInfo.cs
+C:\src\PlateTracker\PlateTracker\PlateTracker.data\obj\Debug\netstandard2.0\PlateTracker.data.csproj.CoreCompileInputs.cache
+C:\src\PlateTracker\PlateTracker\PlateTracker.data\obj\Debug\netstandard2.0\PlateTracker.data.dll
+C:\src\PlateTracker\PlateTracker\PlateTracker.data\obj\Debug\netstandard2.0\PlateTracker.data.pdb

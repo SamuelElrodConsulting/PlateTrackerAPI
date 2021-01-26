@@ -1,0 +1,16 @@
+c:\src\PlateTracker\PlateTracker\PlateTracker.Services\bin\Debug\netstandard2.1\PlateTracker.data.dll
+c:\src\PlateTracker\PlateTracker\PlateTracker.Services\bin\Debug\netstandard2.1\PlateTracker.Utilities.dll
+c:\src\PlateTracker\PlateTracker\PlateTracker.Services\bin\Debug\netstandard2.1\PlateTracker.ViewModels.dll
+c:\src\PlateTracker\PlateTracker\PlateTracker.Services\bin\Debug\netstandard2.1\PlateTracker.data.pdb
+c:\src\PlateTracker\PlateTracker\PlateTracker.Services\bin\Debug\netstandard2.1\PlateTracker.Utilities.pdb
+c:\src\PlateTracker\PlateTracker\PlateTracker.Services\obj\Debug\netstandard2.1\PlateTracker.Services.csprojAssemblyReference.cache
+c:\src\PlateTracker\PlateTracker\PlateTracker.Services\obj\Debug\netstandard2.1\PlateTracker.Services.AssemblyInfoInputs.cache
+c:\src\PlateTracker\PlateTracker\PlateTracker.Services\obj\Debug\netstandard2.1\PlateTracker.Services.AssemblyInfo.cs
+c:\src\PlateTracker\PlateTracker\PlateTracker.Services\bin\Debug\netstandard2.1\PlateTracker.Services.deps.json
+c:\src\PlateTracker\PlateTracker\PlateTracker.Services\bin\Debug\netstandard2.1\PlateTracker.Services.dll
+c:\src\PlateTracker\PlateTracker\PlateTracker.Services\bin\Debug\netstandard2.1\PlateTracker.Services.pdb
+c:\src\PlateTracker\PlateTracker\PlateTracker.Services\bin\Debug\netstandard2.1\PlateTracker.ViewModels.pdb
+c:\src\PlateTracker\PlateTracker\PlateTracker.Services\obj\Debug\netstandard2.1\PlateTracker.Services.csproj.CoreCompileInputs.cache
+c:\src\PlateTracker\PlateTracker\PlateTracker.Services\obj\Debug\netstandard2.1\PlateTracker.Services.csproj.CopyComplete
+c:\src\PlateTracker\PlateTracker\PlateTracker.Services\obj\Debug\netstandard2.1\PlateTracker.Services.dll
+c:\src\PlateTracker\PlateTracker\PlateTracker.Services\obj\Debug\netstandard2.1\PlateTracker.Services.pdb
