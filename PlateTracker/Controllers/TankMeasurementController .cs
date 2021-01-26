@@ -29,6 +29,23 @@ namespace PlateTracker.Controllers
         {
             return _tankMeasurementService.GetTankMeasurements();
         }
+
+        [HttpGet]
+        [Route("{tankMeasurementTankTypeId}")]
+        public IEnumerable<TankMeasurementVM> Get(int tankMeasurementTankTypeId)
+        {
+            return _tankMeasurementService.GetTankMeasurements().Where(t=>t.TankMeasurementTankTypeId== tankMeasurementTankTypeId);
+        }
+
+        [HttpGet]
+        [Route("{tankMeasurementTankTypeId}/{tankMeasurementTypeId}")]
+        public IEnumerable<TankMeasurementVM> Get(int tankMeasurementTankTypeId, int tankMeasurementTypeId)
+        {
+            return _tankMeasurementService.GetTankMeasurements().Where(t => 
+            t.TankMeasurementTankTypeId == tankMeasurementTankTypeId &&
+            t.TankMeasurementTypeId == tankMeasurementTypeId);
+        }
+
         [HttpPost]
         public TankMeasurementVM Post(TankMeasurementVM newMeasurement)
         {
