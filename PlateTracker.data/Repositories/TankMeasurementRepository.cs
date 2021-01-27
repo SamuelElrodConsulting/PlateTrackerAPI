@@ -40,13 +40,24 @@ namespace PlateTracker.data.Repositories
             }
         }
 
+
         public TankMeasurement UpdateTankMeasurement(TankMeasurement tankMeasurement)
         {
             try
             {
-                var result = _context.TankMeasurements.Update(tankMeasurement);
+                var currentValue = _context.TankMeasurements.First(n => n.TankMeasurementId == tankMeasurement.TankMeasurementId);
+                tankMeasurement.CreatedBy = currentValue.CreatedBy;
+                tankMeasurement.DatetimeCreated = currentValue.DatetimeCreated;
+                tankMeasurement.DatetimeUpdated = DateTime.Now;
+                tankMeasurement.UpdatedBy = "SYSTEM";
+                tankMeasurement.TankMeasurementDatetime = currentValue.TankMeasurementDatetime;
+                _context.Entry(currentValue).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+                _context.Entry(tankMeasurement).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                var updateResult = _context.TankMeasurements.Update(tankMeasurement);
+
+
                 _context.SaveChanges();
-                return result.Entity;
+                return updateResult.Entity;
             }
             catch (Exception ex)
             {

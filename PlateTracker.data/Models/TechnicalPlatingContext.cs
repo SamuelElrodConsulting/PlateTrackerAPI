@@ -10,11 +10,13 @@ namespace PlateTracker.data.Models
     {
         public TechnicalPlatingContext()
         {
+            this.Database.EnsureCreated();
         }
 
         public TechnicalPlatingContext(DbContextOptions<TechnicalPlatingContext> options)
             : base(options)
         {
+            this.Database.EnsureCreated();
         }
 
         public virtual DbSet<Employee> Employees { get; set; }
