@@ -11,15 +11,17 @@ namespace PlateTracker.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class EmployeeMeasurementController: ControllerBase
+    public class EmployeeMeasurementController : ControllerBase
     {
         private readonly ILogger<EmployeeMeasurementController> _logger;
         private EmployeeMeasurementService _employeeMeasurementService;
 
-        public EmployeeMeasurementController(ILogger<EmployeeMeasurementController> logger)
+        public EmployeeMeasurementController(
+            EmployeeMeasurementService employeeMeasurementService,
+            ILogger<EmployeeMeasurementController> logger)
         {
             _logger = logger;
-            _employeeMeasurementService = new EmployeeMeasurementService(logger);
+            _employeeMeasurementService = employeeMeasurementService;
         }
 
         [HttpGet]

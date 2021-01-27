@@ -11,8 +11,8 @@ namespace PlateTracker.data.Repositories
     public class TankMeasurementTypesRepository
     {
         TechnicalPlatingContext _context;
-        ILogger _logger;
-        public TankMeasurementTypesRepository(TechnicalPlatingContext context, ILogger logger)
+        ILogger<TankMeasurementTypesRepository> _logger;
+        public TankMeasurementTypesRepository(TechnicalPlatingContext context, ILogger<TankMeasurementTypesRepository> logger)
         {
             _context = context;
             _logger = logger;
@@ -28,9 +28,10 @@ namespace PlateTracker.data.Repositories
             {
                 var result = _context.TankMeasurementTypes.Add(tankMeasurementType);
                 return result.Entity;
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-               _logger.LogError(Utility.FlattException(ex));
+                _logger.LogError(Utility.FlattException(ex));
                 return null;
             }
         }
@@ -44,7 +45,7 @@ namespace PlateTracker.data.Repositories
             }
             catch (Exception ex)
             {
-               _logger.LogError(Utility.FlattException(ex));
+                _logger.LogError(Utility.FlattException(ex));
                 return null;
             }
         }
@@ -67,7 +68,7 @@ namespace PlateTracker.data.Repositories
             }
             catch (Exception ex)
             {
-               _logger.LogError(Utility.FlattException(ex));
+                _logger.LogError(Utility.FlattException(ex));
                 return false;
             }
         }

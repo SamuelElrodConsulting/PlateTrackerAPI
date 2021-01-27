@@ -6,29 +6,34 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using AutoMapper;
 
 namespace PlateTracker.Services
 {
     public class TankMeasurementTankTypeService
     {
-        ILogger _logger;
+        ILogger<TankMeasurementTankTypeService> _logger;
         TankMeasurementTankTypeRepository _tankMeasurementTankTypeRepository;
+        IMapper _mapper;
 
-        public TankMeasurementTankTypeService(ILogger logger)
+        public TankMeasurementTankTypeService(
+            TankMeasurementTankTypeRepository tankMeasurementTankTypeRepository,
+            IMapper mapper,
+            ILogger<TankMeasurementTankTypeService> logger)
         {
+            _mapper = mapper;
             _logger = logger;
-            _tankMeasurementTankTypeRepository = new TankMeasurementTankTypeRepository(new TechnicalPlatingContext(), logger);
+            _tankMeasurementTankTypeRepository = tankMeasurementTankTypeRepository;
         }
 
         public IEnumerable<TankMeasurementTankTypeVM> GetTankMeasurementTankTypes()
         {
-            AutoMapperService mapper = new AutoMapperService();
             List<TankMeasurementTankTypeVM> returnValues = new List<TankMeasurementTankTypeVM>();
 
             var tankTypesAsDTO = _tankMeasurementTankTypeRepository.GetTankMeasurementTankTypes();
             tankTypesAsDTO.ToList().ForEach(n =>
             {
-                var tankTypeAsVM = mapper.IMapper.Map<TankMeasurementTankType, TankMeasurementTankTypeVM>(n);
+                var tankTypeAsVM = _mapper.Map<TankMeasurementTankType, TankMeasurementTankTypeVM>(n);
                 returnValues.Add(tankTypeAsVM);
             });
 

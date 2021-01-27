@@ -11,9 +11,9 @@ namespace PlateTracker.data.Repositories
     public class TankMeasurementRepository
     {
         TechnicalPlatingContext _context;
-        ILogger _logger;
+        ILogger<TankMeasurementRepository> _logger;
 
-        public TankMeasurementRepository(TechnicalPlatingContext context, ILogger logger)
+        public TankMeasurementRepository(TechnicalPlatingContext context, ILogger<TankMeasurementRepository> logger)
         {
             _context = context;
             _logger = logger;

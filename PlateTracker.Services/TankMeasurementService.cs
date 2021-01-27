@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using AutoMapper;
 
 namespace PlateTracker.Services
 {
@@ -13,14 +14,17 @@ namespace PlateTracker.Services
     {
         private TankMeasurementRepository _tankMeasurementRepository;
         private TankMeasurementNominalRepository _tankMeasurementNominalRepository;
-        private AutoMapperService _mapper;
-        private ILogger _logger;
-        public TankMeasurementService(ILogger logger)
+        private IMapper _mapper;
+        private ILogger<TankMeasurementService> _logger;
+        public TankMeasurementService(
+            TankMeasurementRepository tankMeasurementRepository,
+            TankMeasurementNominalRepository tankMeasurementNominalRepository,
+            IMapper mapper,
+            ILogger<TankMeasurementService> logger)
         {
-            var context = new TechnicalPlatingContext();
-            _tankMeasurementRepository = new TankMeasurementRepository(context, logger);
-            _tankMeasurementNominalRepository = new TankMeasurementNominalRepository(context, logger);
-            _mapper = new AutoMapperService();
+            _tankMeasurementRepository = tankMeasurementRepository;
+            _tankMeasurementNominalRepository = tankMeasurementNominalRepository;
+            _mapper = mapper;
             _logger = logger;
         }
 
@@ -31,7 +35,7 @@ namespace PlateTracker.Services
             var measurementAsDTO = _tankMeasurementRepository.GetTankMeasurements();
             measurementAsDTO.ToList().ForEach(n =>
             {
-                var measurementAsVM = _mapper.IMapper.Map<TankMeasurement, TankMeasurementVM>(n);
+                var measurementAsVM = _mapper.Map<TankMeasurement, TankMeasurementVM>(n);
                 measurementAsVM.TankMeasurementTankTypeName = n.TankMeasurementTankType.TankMeasurementTankTypeName;
                 measurementAsVM.TankeMeasurementTypeName = n.TankMeasurementType.TankMeasurementTypeName;
                 measurementAsVM.TankMeasurementDescription = n.TankMeasurementType.TankMeasurementTypeDescription;
@@ -47,7 +51,8 @@ namespace PlateTracker.Services
                     measurementAsVM.MinimumTestingFrequencyDays = nominal.MinimumTestingFrequencyDays;
                     measurementAsVM.IdealTestingFrequencyDays = nominal.IdealTestingFrequencyDays;
                     measurementAsVM.NominalExists = true;
-                } else
+                }
+                else
                 {
                     measurementAsVM.NominalExists = false;
                 }
@@ -64,17 +69,17 @@ namespace PlateTracker.Services
 
         public TankMeasurementVM AddTankMeasurement(TankMeasurementVM tmToAdd)
         {
-            var tmAsDTO = _mapper.IMapper.Map<TankMeasurementVM, TankMeasurement>(tmToAdd);
+            var tmAsDTO = _mapper.Map<TankMeasurementVM, TankMeasurement>(tmToAdd);
             var tmInsertedAsDTO = _tankMeasurementRepository.AddTankMeasurement(tmAsDTO);
-            var tmAsVM = _mapper.IMapper.Map<TankMeasurement, TankMeasurementVM>(tmInsertedAsDTO);
+            var tmAsVM = _mapper.Map<TankMeasurement, TankMeasurementVM>(tmInsertedAsDTO);
             return tmAsVM;
         }
 
         public TankMeasurementVM UpdateTankMeasurement(TankMeasurementVM tmToUpdate)
         {
-            var tmAsDTO = _mapper.IMapper.Map<TankMeasurementVM, TankMeasurement>(tmToUpdate);
+            var tmAsDTO = _mapper.Map<TankMeasurementVM, TankMeasurement>(tmToUpdate);
             var tmUpdatedAsDTO = _tankMeasurementRepository.UpdateTankMeasurement(tmAsDTO);
-            var tmAsVM = _mapper.IMapper.Map<TankMeasurement, TankMeasurementVM>(tmUpdatedAsDTO);
+            var tmAsVM = _mapper.Map<TankMeasurement, TankMeasurementVM>(tmUpdatedAsDTO);
             return tmAsVM;
         }
         public bool DeleteTankMeasurement(int deleteID)
@@ -83,7 +88,8 @@ namespace PlateTracker.Services
             {
                 _tankMeasurementRepository.DeleteTankMeasurement(deleteID);
                 return true;
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 _logger.LogError(ex.ToString());
                 return false;

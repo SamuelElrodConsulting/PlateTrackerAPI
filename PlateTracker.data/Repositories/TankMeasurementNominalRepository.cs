@@ -10,8 +10,8 @@ namespace PlateTracker.data.Repositories
     public class TankMeasurementNominalRepository
     {
         TechnicalPlatingContext _context;
-        ILogger _logger;
-        public TankMeasurementNominalRepository(TechnicalPlatingContext context, ILogger logger)
+        ILogger<TankMeasurementNominalRepository> _logger;
+        public TankMeasurementNominalRepository(TechnicalPlatingContext context, ILogger<TankMeasurementNominalRepository> logger)
         {
             _context = context;
             _logger = logger;
@@ -23,9 +23,9 @@ namespace PlateTracker.data.Repositories
 
         public TankMeasurementNominal GetTankMeasurementNominal(int tankTypeId, int tankMeasurementTypeId)
         {
-            var value =  _context.TankMeasurementNominals.FirstOrDefault(n => 
-                n.TankMeasurementTypeId == tankMeasurementTypeId &&
-                n.TankMeasurementTankTypeId == tankTypeId);
+            var value = _context.TankMeasurementNominals.FirstOrDefault(n =>
+               n.TankMeasurementTypeId == tankMeasurementTypeId &&
+               n.TankMeasurementTankTypeId == tankTypeId);
 
             return value;
         }
