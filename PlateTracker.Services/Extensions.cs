@@ -9,7 +9,6 @@ namespace PlateTracker.Services
         {
             return
                 services
-                    .AddTransient<AutoMapperService, AutoMapperService>()
                     .AddTransient<EmployeeMeasurementService, EmployeeMeasurementService>()
                     .AddTransient<TankMeasurementNominalService, TankMeasurementNominalService>()
                     .AddTransient<TankMeasurementService, TankMeasurementService>()
