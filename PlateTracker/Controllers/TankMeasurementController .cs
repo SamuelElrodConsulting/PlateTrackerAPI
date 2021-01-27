@@ -18,10 +18,12 @@ namespace PlateTracker.Controllers
         private readonly ILogger<TankMeasurementController> _logger;
         private TankMeasurementService _tankMeasurementService;
 
-        public TankMeasurementController(ILogger<TankMeasurementController> logger)
+        public TankMeasurementController(
+            TankMeasurementService tankMeasurementService,
+            ILogger<TankMeasurementController> logger)
         {
             _logger = logger;
-            _tankMeasurementService = new TankMeasurementService(logger);
+            _tankMeasurementService = tankMeasurementService;
         }
 
         [HttpGet]
@@ -34,14 +36,14 @@ namespace PlateTracker.Controllers
         [Route("{tankMeasurementTankTypeId}")]
         public IEnumerable<TankMeasurementVM> Get(int tankMeasurementTankTypeId)
         {
-            return _tankMeasurementService.GetTankMeasurements().Where(t=>t.TankMeasurementTankTypeId== tankMeasurementTankTypeId);
+            return _tankMeasurementService.GetTankMeasurements().Where(t => t.TankMeasurementTankTypeId == tankMeasurementTankTypeId);
         }
 
         [HttpGet]
         [Route("{tankMeasurementTankTypeId}/{tankMeasurementTypeId}")]
         public IEnumerable<TankMeasurementVM> Get(int tankMeasurementTankTypeId, int tankMeasurementTypeId)
         {
-            return _tankMeasurementService.GetTankMeasurements().Where(t => 
+            return _tankMeasurementService.GetTankMeasurements().Where(t =>
             t.TankMeasurementTankTypeId == tankMeasurementTankTypeId &&
             t.TankMeasurementTypeId == tankMeasurementTypeId);
         }

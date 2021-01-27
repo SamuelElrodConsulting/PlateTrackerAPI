@@ -16,10 +16,12 @@ namespace PlateTracker.Controllers
         private readonly ILogger<TankMeasurementController> _logger;
         private TankMeasurementNominalService _tankMeasurementNominalService;
 
-        public TankMeasurementNominalController(ILogger<TankMeasurementController> logger)
+        public TankMeasurementNominalController(
+            TankMeasurementNominalService tankMeasurementNominalService,
+            ILogger<TankMeasurementController> logger)
         {
             _logger = logger;
-            _tankMeasurementNominalService = new TankMeasurementNominalService(logger);
+            _tankMeasurementNominalService = tankMeasurementNominalService;
         }
 
         [HttpGet]

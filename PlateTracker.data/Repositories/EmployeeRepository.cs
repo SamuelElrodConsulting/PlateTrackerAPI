@@ -10,8 +10,8 @@ namespace PlateTracker.data.Repositories
     public class EmployeeRepository
     {
         TechnicalPlatingContext _context;
-        ILogger _logger;
-        public EmployeeRepository(TechnicalPlatingContext context, ILogger logger)
+        ILogger<EmployeeRepository> _logger;
+        public EmployeeRepository(TechnicalPlatingContext context, ILogger<EmployeeRepository> logger)
         {
             _context = context;
             _logger = logger;

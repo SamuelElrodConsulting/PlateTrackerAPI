@@ -12,11 +12,12 @@ namespace PlateTracker.Services
     public class EmployeeMeasurementService
     {
         EmployeeRepository _employeeRepository;
-        ILogger _logger;
-        public EmployeeMeasurementService(ILogger logger)
+        ILogger<EmployeeMeasurementService> _logger;
+        public EmployeeMeasurementService(
+            EmployeeRepository employeeRepository,
+            ILogger<EmployeeMeasurementService> logger)
         {
             _logger = logger;
-            EmployeeRepository employeeRepository = new EmployeeRepository(new TechnicalPlatingContext(), _logger);
             _employeeRepository = employeeRepository;
         }
 

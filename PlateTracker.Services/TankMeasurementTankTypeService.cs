@@ -11,13 +11,15 @@ namespace PlateTracker.Services
 {
     public class TankMeasurementTankTypeService
     {
-        ILogger _logger;
+        ILogger<TankMeasurementTankTypeService> _logger;
         TankMeasurementTankTypeRepository _tankMeasurementTankTypeRepository;
 
-        public TankMeasurementTankTypeService(ILogger logger)
+        public TankMeasurementTankTypeService(
+            TankMeasurementTankTypeRepository tankMeasurementTankTypeRepository,
+            ILogger<TankMeasurementTankTypeService> logger)
         {
             _logger = logger;
-            _tankMeasurementTankTypeRepository = new TankMeasurementTankTypeRepository(new TechnicalPlatingContext(), logger);
+            _tankMeasurementTankTypeRepository = tankMeasurementTankTypeRepository;
         }
 
         public IEnumerable<TankMeasurementTankTypeVM> GetTankMeasurementTankTypes()
