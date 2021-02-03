@@ -4,11 +4,11 @@ using System.Text;
 
 namespace PlateTracker.ViewModels
 {
-    public class TankMeasurementTankTypeVM
+    public class TankTypeVM
     {
-        public int TankMeasurementTankTypeId { get; set; }
-        public string TankMeasurementTankTypeName { get; set; }
-        public string TankMeasurementTankTypeDescription { get; set; }
+        public int TankTypeId { get; set; }
+        public string TankTypeName { get; set; }
+        public string TankTypeDescription { get; set; }
         public int LineTypeId { get; set; }
         public DateTime DatetimeCreated { get; set; }
         public DateTime DatetimeUpdated { get; set; }

@@ -7,18 +7,18 @@ using Microsoft.Extensions.Logging;
 
 namespace PlateTracker.data.Repositories
 {
-    public class TankMeasurementTankTypeRepository
+    public class TankTypeRepository
     {
         TechnicalPlatingContext _context;
-        ILogger<TankMeasurementTankTypeRepository> _logger;
-        public TankMeasurementTankTypeRepository(TechnicalPlatingContext context, ILogger<TankMeasurementTankTypeRepository> logger)
+        ILogger<TankTypeRepository> _logger;
+        public TankTypeRepository(TechnicalPlatingContext context, ILogger<TankTypeRepository> logger)
         {
             _context = context;
             _logger = logger;
         }
-        public IEnumerable<TankMeasurementTankType> GetTankMeasurementTankTypes()
+        public IEnumerable<TankType> GetTankTypes()
         {
-            return _context.TankMeasurementTankTypes.ToList();
+            return _context.TankTypes.ToList();
         }
     }
 }

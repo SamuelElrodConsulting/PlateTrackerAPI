@@ -9,7 +9,7 @@ namespace PlateTracker.data.Models
     {
         public long TankMeasurementId { get; set; }
         public int TankMeasurementTypeId { get; set; }
-        public int TankMeasurementTankTypeId { get; set; }
+        public int TankTypeId { get; set; }
         public decimal Value { get; set; }
         public string Notes { get; set; }
         public int TankMeasurementEmployeeId { get; set; }
@@ -20,7 +20,7 @@ namespace PlateTracker.data.Models
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }
 
-        public virtual TankMeasurementTankType TankMeasurementTankType { get; set; }
+        public virtual TankType TankType { get; set; }
         public virtual TankMeasurementType TankMeasurementType { get; set; }
         public virtual Employee Employee { get; set; }
     }

@@ -12,7 +12,7 @@ namespace PlateTracker.Services
                 .ReverseMap();
             CreateMap<TankMeasurementType, TankMeasurementTypeVM>()
                 .ReverseMap();
-            CreateMap<TankMeasurementTankType, TankMeasurementTankTypeVM>()
+            CreateMap<TankType, TankTypeVM>()
                 .ReverseMap();
             CreateMap<TankMeasurement, TankMeasurementVM>()
                 .ReverseMap();

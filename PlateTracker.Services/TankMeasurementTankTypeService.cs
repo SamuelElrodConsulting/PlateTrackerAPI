@@ -10,30 +10,30 @@ using AutoMapper;
 
 namespace PlateTracker.Services
 {
-    public class TankMeasurementTankTypeService
+    public class TankTypeService
     {
-        ILogger<TankMeasurementTankTypeService> _logger;
-        TankMeasurementTankTypeRepository _tankMeasurementTankTypeRepository;
+        ILogger<TankTypeService> _logger;
+        TankTypeRepository _TankTypeRepository;
         IMapper _mapper;
 
-        public TankMeasurementTankTypeService(
-            TankMeasurementTankTypeRepository tankMeasurementTankTypeRepository,
+        public TankTypeService(
+            TankTypeRepository TankTypeRepository,
             IMapper mapper,
-            ILogger<TankMeasurementTankTypeService> logger)
+            ILogger<TankTypeService> logger)
         {
             _mapper = mapper;
             _logger = logger;
-            _tankMeasurementTankTypeRepository = tankMeasurementTankTypeRepository;
+            _TankTypeRepository = TankTypeRepository;
         }
 
-        public IEnumerable<TankMeasurementTankTypeVM> GetTankMeasurementTankTypes()
+        public IEnumerable<TankTypeVM> GetTankTypes()
         {
-            List<TankMeasurementTankTypeVM> returnValues = new List<TankMeasurementTankTypeVM>();
+            List<TankTypeVM> returnValues = new List<TankTypeVM>();
 
-            var tankTypesAsDTO = _tankMeasurementTankTypeRepository.GetTankMeasurementTankTypes();
+            var tankTypesAsDTO = _TankTypeRepository.GetTankTypes();
             tankTypesAsDTO.ToList().ForEach(n =>
             {
-                var tankTypeAsVM = _mapper.Map<TankMeasurementTankType, TankMeasurementTankTypeVM>(n);
+                var tankTypeAsVM = _mapper.Map<TankType, TankTypeVM>(n);
                 returnValues.Add(tankTypeAsVM);
             });
 

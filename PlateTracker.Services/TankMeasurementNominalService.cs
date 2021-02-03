@@ -31,7 +31,7 @@ namespace PlateTracker.Services
             nominalsAsDTO.ToList().ForEach(n =>
             {
                 var nominalAsVM = _mapper.Map<TankMeasurementNominal, TankMeasurementNominalVM>(n);
-                nominalAsVM.TankMeasurementTankTypeName = n.TankMeasurementTankType.TankMeasurementTankTypeName;
+                nominalAsVM.TankTypeName = n.TankType.TankTypeName;
                 nominalAsVM.TankMeasurementTypeName = n.TankMeasurementType.TankMeasurementTypeName;
                 nominalAsVM.UOM = n.TankMeasurementType.Uom;
                 returnValues.Add(nominalAsVM);

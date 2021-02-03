@@ -36,13 +36,13 @@ namespace PlateTracker.Services
             measurementAsDTO.ToList().ForEach(n =>
             {
                 var measurementAsVM = _mapper.Map<TankMeasurement, TankMeasurementVM>(n);
-                measurementAsVM.TankMeasurementTankTypeName = n.TankMeasurementTankType.TankMeasurementTankTypeName;
+                measurementAsVM.TankTypeName = n.TankType.TankTypeName;
                 measurementAsVM.TankeMeasurementTypeName = n.TankMeasurementType.TankMeasurementTypeName;
                 measurementAsVM.TankMeasurementDescription = n.TankMeasurementType.TankMeasurementTypeDescription;
                 measurementAsVM.UOM = n.TankMeasurementType.Uom;
                 measurementAsVM.EmployeeName = n.Employee.EmployeeFirstName + " " + n.Employee.EmployeeLastName;
 
-                var nominal = _tankMeasurementNominalRepository.GetTankMeasurementNominal(n.TankMeasurementTankTypeId, n.TankMeasurementTypeId);
+                var nominal = _tankMeasurementNominalRepository.GetTankMeasurementNominal(n.TankTypeId, n.TankMeasurementTypeId);
                 if (nominal != null)
                 {
                     measurementAsVM.LowNominalValue = nominal.LowNominalValue;

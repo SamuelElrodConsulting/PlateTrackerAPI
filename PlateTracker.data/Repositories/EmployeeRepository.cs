@@ -35,7 +35,7 @@ namespace PlateTracker.data.Repositories
         {
             var currentValue = _context.Employees.First(n => n.EmployeeId == employeeToUpdate.EmployeeId);
             employeeToUpdate.CreatedBy = currentValue.CreatedBy;
-            employeeToUpdate.CreatedDatetime = currentValue.CreatedDatetime;
+            employeeToUpdate.DatetimeCreated = currentValue.DatetimeCreated;
             _context.Entry(currentValue).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
             _context.Entry(employeeToUpdate).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             var updateResult = _context.Employees.Update(employeeToUpdate);

@@ -11,6 +11,6 @@ namespace PlateTracker.ViewModels
         public string EmployeeLastName { get; set; }
         public string BuddyPunchId { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime CreatedDatetime { get; set; }
+        public DateTime DatetimeCreated { get; set; }
     }
 }

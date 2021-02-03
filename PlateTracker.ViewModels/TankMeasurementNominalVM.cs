@@ -5,8 +5,8 @@ namespace PlateTracker.ViewModels
     public class TankMeasurementNominalVM
     {
         public int TankMeasurementNominalId { get; set; }
-        public int TankMeasurementTankTypeId { get; set; }
-        public string TankMeasurementTankTypeName { get; set; }
+        public int TankTypeId { get; set; }
+        public string TankTypeName { get; set; }
         public int TankMeasurementTypeId { get; set; }
         public string TankMeasurementTypeName { get; set; }
         public int LowNominalValue { get; set; }

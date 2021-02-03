@@ -25,7 +25,7 @@ namespace PlateTracker.data.Repositories
         {
             var value = _context.TankMeasurementNominals.FirstOrDefault(n =>
                n.TankMeasurementTypeId == tankMeasurementTypeId &&
-               n.TankMeasurementTankTypeId == tankTypeId);
+               n.TankTypeId == tankTypeId);
 
             return value;
         }

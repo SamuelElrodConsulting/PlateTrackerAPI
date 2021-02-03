@@ -12,7 +12,7 @@ namespace PlateTracker.data.Models
         public string EmployeeLastName { get; set; }
         public string BuddyPunchId { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime CreatedDatetime { get; set; }
+        public DateTime DatetimeCreated { get; set; }
         public virtual ICollection<TankMeasurement> TankMeasurements { get; set; }
 
     }

@@ -5,17 +5,17 @@ using System.Collections.Generic;
 
 namespace PlateTracker.data.Models
 {
-    public partial class TankMeasurementTankType
+    public partial class TankType
     {
-        public TankMeasurementTankType()
+        public TankType()
         {
             TankMeasurementNominals = new HashSet<TankMeasurementNominal>();
             TankMeasurements = new HashSet<TankMeasurement>();
         }
 
-        public int TankMeasurementTankTypeId { get; set; }
-        public string TankMeasurementTankTypeName { get; set; }
-        public string TankMeasurementTankTypeDescription { get; set; }
+        public int TankTypeId { get; set; }
+        public string TankTypeName { get; set; }
+        public string TankTypeDescription { get; set; }
         public int LineTypeId { get; set; }
         public DateTime DatetimeCreated { get; set; }
         public DateTime DatetimeUpdated { get; set; }

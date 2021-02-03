@@ -23,7 +23,7 @@ namespace PlateTracker.data.Models
         public virtual DbSet<LineType> LineTypes { get; set; }
         public virtual DbSet<TankMeasurement> TankMeasurements { get; set; }
         public virtual DbSet<TankMeasurementNominal> TankMeasurementNominals { get; set; }
-        public virtual DbSet<TankMeasurementTankType> TankMeasurementTankTypes { get; set; }
+        public virtual DbSet<TankType> TankTypes { get; set; }
         public virtual DbSet<TankMeasurementType> TankMeasurementTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -47,7 +47,7 @@ namespace PlateTracker.data.Models
                     .IsUnicode(false)
                     .HasDefaultValueSql("('SYSTEM')");
 
-                entity.Property(e => e.CreatedDatetime)
+                entity.Property(e => e.DatetimeCreated)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
@@ -125,7 +125,7 @@ namespace PlateTracker.data.Models
 
                 entity.Property(e => e.TankMeasurementEmployeeId).HasColumnName("TankMeasurementEmployeeID");
 
-                entity.Property(e => e.TankMeasurementTankTypeId).HasColumnName("TankMeasurementTankTypeID");
+                entity.Property(e => e.TankTypeId).HasColumnName("TankTypeID");
 
                 entity.Property(e => e.TankMeasurementTypeId).HasColumnName("TankMeasurementTypeID");
 
@@ -136,11 +136,11 @@ namespace PlateTracker.data.Models
 
                 entity.Property(e => e.Value).HasColumnType("decimal(18, 0)");
 
-                entity.HasOne(d => d.TankMeasurementTankType)
+                entity.HasOne(d => d.TankType)
                     .WithMany(p => p.TankMeasurements)
-                    .HasForeignKey(d => d.TankMeasurementTankTypeId)
+                    .HasForeignKey(d => d.TankTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_TankMeasurement_TankMeasurementTankType");
+                    .HasConstraintName("FK_TankMeasurement_TankType");
 
                 entity.HasOne(d => d.Employee)
                     .WithMany(p => p.TankMeasurements)
@@ -159,7 +159,7 @@ namespace PlateTracker.data.Models
             {
                 entity.ToTable("TankMeasurementNominal");
 
-                entity.HasIndex(e => new { e.TankMeasurementTankTypeId, e.TankMeasurementTypeId }, "uq_TankMeasurementNominal")
+                entity.HasIndex(e => new { e.TankTypeId, e.TankMeasurementTypeId }, "uq_TankMeasurementNominal")
                     .IsUnique();
 
                 entity.Property(e => e.TankMeasurementNominalId).HasColumnName("TankMeasurementNominalID");
@@ -178,7 +178,7 @@ namespace PlateTracker.data.Models
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.TankMeasurementTankTypeId).HasColumnName("TankMeasurementTankTypeID");
+                entity.Property(e => e.TankTypeId).HasColumnName("TankTypeID");
 
                 entity.Property(e => e.TankMeasurementTypeId).HasColumnName("TankMeasurementTypeID");
 
@@ -188,9 +188,9 @@ namespace PlateTracker.data.Models
                     .IsUnicode(false)
                     .HasDefaultValueSql("('SYSTEM')");
 
-                entity.HasOne(d => d.TankMeasurementTankType)
+                entity.HasOne(d => d.TankType)
                     .WithMany(p => p.TankMeasurementNominals)
-                    .HasForeignKey(d => d.TankMeasurementTankTypeId)
+                    .HasForeignKey(d => d.TankTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TankMeasurementNominal_TankMeasurementNominal");
 
@@ -201,11 +201,11 @@ namespace PlateTracker.data.Models
                     .HasConstraintName("FK_TankMeasurementNominal_TankMeasurementType");
             });
 
-            modelBuilder.Entity<TankMeasurementTankType>(entity =>
+            modelBuilder.Entity<TankType>(entity =>
             {
-                entity.ToTable("TankMeasurementTankType");
+                entity.ToTable("TankType");
 
-                entity.Property(e => e.TankMeasurementTankTypeId).HasColumnName("TankMeasurementTankTypeID");
+                entity.Property(e => e.TankTypeId).HasColumnName("TankTypeID");
 
                 entity.Property(e => e.CreatedBy)
                     .IsRequired()
@@ -223,11 +223,11 @@ namespace PlateTracker.data.Models
 
                 entity.Property(e => e.LineTypeId).HasColumnName("LineTypeID");
 
-                entity.Property(e => e.TankMeasurementTankTypeDescription)
+                entity.Property(e => e.TankTypeDescription)
                     .IsRequired()
                     .IsUnicode(false);
 
-                entity.Property(e => e.TankMeasurementTankTypeName)
+                entity.Property(e => e.TankTypeName)
                     .IsRequired()
                     .HasMaxLength(255)
                     .IsUnicode(false);
@@ -239,10 +239,10 @@ namespace PlateTracker.data.Models
                     .HasDefaultValueSql("('SYSTEM')");
 
                 entity.HasOne(d => d.LineType)
-                    .WithMany(p => p.TankMeasurementTankTypes)
+                    .WithMany(p => p.TankTypes)
                     .HasForeignKey(d => d.LineTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_TankMeasurementTankType_LineType");
+                    .HasConstraintName("FK_TankType_LineType");
             });
 
             modelBuilder.Entity<TankMeasurementType>(entity =>

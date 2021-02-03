@@ -17,7 +17,7 @@ namespace PlateTracker.data.Migrations
                     EmployeeLastName = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     BuddyPunchID = table.Column<string>(type: "varchar(max)", unicode: false, nullable: false),
                     CreatedBy = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: false, defaultValueSql: "('SYSTEM')"),
-                    CreatedDatetime = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "(getdate())")
+                    DatetimeCreated = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "(getdate())")
                 },
                 constraints: table =>
                 {
@@ -64,13 +64,13 @@ namespace PlateTracker.data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TankMeasurementTankType",
+                name: "TankType",
                 columns: table => new
                 {
-                    TankMeasurementTankTypeID = table.Column<int>(type: "int", nullable: false)
+                    TankTypeID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TankMeasurementTankTypeName = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: false),
-                    TankMeasurementTankTypeDescription = table.Column<string>(type: "varchar(max)", unicode: false, nullable: false),
+                    TankTypeName = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: false),
+                    TankTypeDescription = table.Column<string>(type: "varchar(max)", unicode: false, nullable: false),
                     LineTypeID = table.Column<int>(type: "int", nullable: false),
                     DatetimeCreated = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "(getdate())"),
                     DatetimeUpdated = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "(getdate())"),
@@ -80,9 +80,9 @@ namespace PlateTracker.data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TankMeasurementTankType", x => x.TankMeasurementTankTypeID);
+                    table.PrimaryKey("PK_TankType", x => x.TankTypeID);
                     table.ForeignKey(
-                        name: "FK_TankMeasurementTankType_LineType",
+                        name: "FK_TankType_LineType",
                         column: x => x.LineTypeID,
                         principalTable: "LineType",
                         principalColumn: "LineTypeID",
@@ -96,7 +96,7 @@ namespace PlateTracker.data.Migrations
                     TankMeasurementID = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TankMeasurementTypeID = table.Column<int>(type: "int", nullable: false),
-                    TankMeasurementTankTypeID = table.Column<int>(type: "int", nullable: false),
+                    TankTypeID = table.Column<int>(type: "int", nullable: false),
                     Value = table.Column<decimal>(type: "decimal(18,0)", nullable: false),
                     Notes = table.Column<string>(type: "varchar(max)", unicode: false, nullable: true),
                     TankMeasurementEmployeeID = table.Column<int>(type: "int", nullable: false),
@@ -117,10 +117,10 @@ namespace PlateTracker.data.Migrations
                         principalColumn: "EmployeeID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_TankMeasurement_TankMeasurementTankType",
-                        column: x => x.TankMeasurementTankTypeID,
-                        principalTable: "TankMeasurementTankType",
-                        principalColumn: "TankMeasurementTankTypeID",
+                        name: "FK_TankMeasurement_TankType",
+                        column: x => x.TankTypeID,
+                        principalTable: "TankType",
+                        principalColumn: "TankTypeID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_TankMeasurement_TankMeasurementType",
@@ -136,7 +136,7 @@ namespace PlateTracker.data.Migrations
                 {
                     TankMeasurementNominalID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TankMeasurementTankTypeID = table.Column<int>(type: "int", nullable: false),
+                    TankTypeID = table.Column<int>(type: "int", nullable: false),
                     TankMeasurementTypeID = table.Column<int>(type: "int", nullable: false),
                     LowNominalValue = table.Column<int>(type: "int", nullable: false),
                     IdealNominalValue = table.Column<int>(type: "int", nullable: false),
@@ -153,9 +153,9 @@ namespace PlateTracker.data.Migrations
                     table.PrimaryKey("PK_TankMeasurementNominal", x => x.TankMeasurementNominalID);
                     table.ForeignKey(
                         name: "FK_TankMeasurementNominal_TankMeasurementNominal",
-                        column: x => x.TankMeasurementTankTypeID,
-                        principalTable: "TankMeasurementTankType",
-                        principalColumn: "TankMeasurementTankTypeID",
+                        column: x => x.TankTypeID,
+                        principalTable: "TankType",
+                        principalColumn: "TankTypeID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_TankMeasurementNominal_TankMeasurementType",
@@ -171,9 +171,9 @@ namespace PlateTracker.data.Migrations
                 column: "TankMeasurementEmployeeID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TankMeasurement_TankMeasurementTankTypeID",
+                name: "IX_TankMeasurement_TankTypeID",
                 table: "TankMeasurement",
-                column: "TankMeasurementTankTypeID");
+                column: "TankTypeID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TankMeasurement_TankMeasurementTypeID",
@@ -188,12 +188,12 @@ namespace PlateTracker.data.Migrations
             migrationBuilder.CreateIndex(
                 name: "uq_TankMeasurementNominal",
                 table: "TankMeasurementNominal",
-                columns: new[] { "TankMeasurementTankTypeID", "TankMeasurementTypeID" },
+                columns: new[] { "TankTypeID", "TankMeasurementTypeID" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_TankMeasurementTankType_LineTypeID",
-                table: "TankMeasurementTankType",
+                name: "IX_TankType_LineTypeID",
+                table: "TankType",
                 column: "LineTypeID");
         }
 
@@ -209,7 +209,7 @@ namespace PlateTracker.data.Migrations
                 name: "Employee");
 
             migrationBuilder.DropTable(
-                name: "TankMeasurementTankType");
+                name: "TankType");
 
             migrationBuilder.DropTable(
                 name: "TankMeasurementType");

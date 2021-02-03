@@ -12,23 +12,23 @@ namespace PlateTracker.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TankMeasurementTankTypeController : ControllerBase
+    public class TankTypeController : ControllerBase
     {
-        private readonly ILogger<TankMeasurementTankTypeController> _logger;
-        private TankMeasurementTankTypeService _tankMeasurementTankType;
+        private readonly ILogger<TankTypeController> _logger;
+        private TankTypeService _TankType;
 
-        public TankMeasurementTankTypeController(
-            TankMeasurementTankTypeService tankMeasurementTankTypeService,
-            ILogger<TankMeasurementTankTypeController> logger)
+        public TankTypeController(
+            TankTypeService TankTypeService,
+            ILogger<TankTypeController> logger)
         {
             _logger = logger;
-            _tankMeasurementTankType = tankMeasurementTankTypeService;
+            _TankType = TankTypeService;
         }
 
         [HttpGet]
-        public IEnumerable<TankMeasurementTankTypeVM> Get()
+        public IEnumerable<TankTypeVM> Get()
         {
-            return _tankMeasurementTankType.GetTankMeasurementTankTypes();
+            return _TankType.GetTankTypes();
         }
     }
 }

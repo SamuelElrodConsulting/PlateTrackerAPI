@@ -44,7 +44,7 @@ namespace PlateTracker.data.Migrations
                         .HasColumnType("varchar(255)")
                         .HasDefaultValueSql("('SYSTEM')");
 
-                    b.Property<DateTime>("CreatedDatetime")
+                    b.Property<DateTime>("DatetimeCreated")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
                         .HasDefaultValueSql("(getdate())");
@@ -160,9 +160,9 @@ namespace PlateTracker.data.Migrations
                         .HasColumnType("int")
                         .HasColumnName("TankMeasurementEmployeeID");
 
-                    b.Property<int>("TankMeasurementTankTypeId")
+                    b.Property<int>("TankTypeId")
                         .HasColumnType("int")
-                        .HasColumnName("TankMeasurementTankTypeID");
+                        .HasColumnName("TankTypeID");
 
                     b.Property<int>("TankMeasurementTypeId")
                         .HasColumnType("int")
@@ -182,7 +182,7 @@ namespace PlateTracker.data.Migrations
 
                     b.HasIndex("TankMeasurementEmployeeId");
 
-                    b.HasIndex("TankMeasurementTankTypeId");
+                    b.HasIndex("TankTypeId");
 
                     b.HasIndex("TankMeasurementTypeId");
 
@@ -230,9 +230,9 @@ namespace PlateTracker.data.Migrations
                     b.Property<int>("MinimumTestingFrequencyDays")
                         .HasColumnType("int");
 
-                    b.Property<int>("TankMeasurementTankTypeId")
+                    b.Property<int>("TankTypeId")
                         .HasColumnType("int")
-                        .HasColumnName("TankMeasurementTankTypeID");
+                        .HasColumnName("TankTypeID");
 
                     b.Property<int>("TankMeasurementTypeId")
                         .HasColumnType("int")
@@ -250,18 +250,18 @@ namespace PlateTracker.data.Migrations
 
                     b.HasIndex("TankMeasurementTypeId");
 
-                    b.HasIndex(new[] { "TankMeasurementTankTypeId", "TankMeasurementTypeId" }, "uq_TankMeasurementNominal")
+                    b.HasIndex(new[] { "TankTypeId", "TankMeasurementTypeId" }, "uq_TankMeasurementNominal")
                         .IsUnique();
 
                     b.ToTable("TankMeasurementNominal");
                 });
 
-            modelBuilder.Entity("PlateTracker.data.Models.TankMeasurementTankType", b =>
+            modelBuilder.Entity("PlateTracker.data.Models.TankType", b =>
                 {
-                    b.Property<int>("TankMeasurementTankTypeId")
+                    b.Property<int>("TankTypeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("TankMeasurementTankTypeID")
+                        .HasColumnName("TankTypeID")
                         .UseIdentityColumn();
 
                     b.Property<string>("CreatedBy")
@@ -289,12 +289,12 @@ namespace PlateTracker.data.Migrations
                         .HasColumnType("int")
                         .HasColumnName("LineTypeID");
 
-                    b.Property<string>("TankMeasurementTankTypeDescription")
+                    b.Property<string>("TankTypeDescription")
                         .IsRequired()
                         .IsUnicode(false)
                         .HasColumnType("varchar(max)");
 
-                    b.Property<string>("TankMeasurementTankTypeName")
+                    b.Property<string>("TankTypeName")
                         .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
@@ -308,11 +308,11 @@ namespace PlateTracker.data.Migrations
                         .HasColumnType("varchar(255)")
                         .HasDefaultValueSql("('SYSTEM')");
 
-                    b.HasKey("TankMeasurementTankTypeId");
+                    b.HasKey("TankTypeId");
 
                     b.HasIndex("LineTypeId");
 
-                    b.ToTable("TankMeasurementTankType");
+                    b.ToTable("TankType");
                 });
 
             modelBuilder.Entity("PlateTracker.data.Models.TankMeasurementType", b =>
@@ -383,10 +383,10 @@ namespace PlateTracker.data.Migrations
                         .HasConstraintName("FK_TankMeasurement_Employee")
                         .IsRequired();
 
-                    b.HasOne("PlateTracker.data.Models.TankMeasurementTankType", "TankMeasurementTankType")
+                    b.HasOne("PlateTracker.data.Models.TankType", "TankType")
                         .WithMany("TankMeasurements")
-                        .HasForeignKey("TankMeasurementTankTypeId")
-                        .HasConstraintName("FK_TankMeasurement_TankMeasurementTankType")
+                        .HasForeignKey("TankTypeId")
+                        .HasConstraintName("FK_TankMeasurement_TankType")
                         .IsRequired();
 
                     b.HasOne("PlateTracker.data.Models.TankMeasurementType", "TankMeasurementType")
@@ -397,16 +397,16 @@ namespace PlateTracker.data.Migrations
 
                     b.Navigation("Employee");
 
-                    b.Navigation("TankMeasurementTankType");
+                    b.Navigation("TankType");
 
                     b.Navigation("TankMeasurementType");
                 });
 
             modelBuilder.Entity("PlateTracker.data.Models.TankMeasurementNominal", b =>
                 {
-                    b.HasOne("PlateTracker.data.Models.TankMeasurementTankType", "TankMeasurementTankType")
+                    b.HasOne("PlateTracker.data.Models.TankType", "TankType")
                         .WithMany("TankMeasurementNominals")
-                        .HasForeignKey("TankMeasurementTankTypeId")
+                        .HasForeignKey("TankTypeId")
                         .HasConstraintName("FK_TankMeasurementNominal_TankMeasurementNominal")
                         .IsRequired();
 
@@ -416,17 +416,17 @@ namespace PlateTracker.data.Migrations
                         .HasConstraintName("FK_TankMeasurementNominal_TankMeasurementType")
                         .IsRequired();
 
-                    b.Navigation("TankMeasurementTankType");
+                    b.Navigation("TankType");
 
                     b.Navigation("TankMeasurementType");
                 });
 
-            modelBuilder.Entity("PlateTracker.data.Models.TankMeasurementTankType", b =>
+            modelBuilder.Entity("PlateTracker.data.Models.TankType", b =>
                 {
                     b.HasOne("PlateTracker.data.Models.LineType", "LineType")
-                        .WithMany("TankMeasurementTankTypes")
+                        .WithMany("TankTypes")
                         .HasForeignKey("LineTypeId")
-                        .HasConstraintName("FK_TankMeasurementTankType_LineType")
+                        .HasConstraintName("FK_TankType_LineType")
                         .IsRequired();
 
                     b.Navigation("LineType");
@@ -439,10 +439,10 @@ namespace PlateTracker.data.Migrations
 
             modelBuilder.Entity("PlateTracker.data.Models.LineType", b =>
                 {
-                    b.Navigation("TankMeasurementTankTypes");
+                    b.Navigation("TankTypes");
                 });
 
-            modelBuilder.Entity("PlateTracker.data.Models.TankMeasurementTankType", b =>
+            modelBuilder.Entity("PlateTracker.data.Models.TankType", b =>
                 {
                     b.Navigation("TankMeasurementNominals");
 

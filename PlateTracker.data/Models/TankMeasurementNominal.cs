@@ -9,7 +9,7 @@ namespace PlateTracker.data.Models
     public partial class TankMeasurementNominal
     {
         public int TankMeasurementNominalId { get; set; }
-        public int TankMeasurementTankTypeId { get; set; }
+        public int TankTypeId { get; set; }
         public int TankMeasurementTypeId { get; set; }
         public int LowNominalValue { get; set; }
         public int IdealNominalValue { get; set; }
@@ -20,7 +20,7 @@ namespace PlateTracker.data.Models
         public DateTime DatetimeCreated { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime DatetimeUpdated { get; set; }
-        public virtual TankMeasurementTankType TankMeasurementTankType { get; set; }
+        public virtual TankType TankType { get; set; }
         public virtual TankMeasurementType TankMeasurementType { get; set; }
     }
 }

@@ -33,18 +33,18 @@ namespace PlateTracker.Controllers
         }
 
         [HttpGet]
-        [Route("{tankMeasurementTankTypeId}")]
-        public IEnumerable<TankMeasurementVM> Get(int tankMeasurementTankTypeId)
+        [Route("{TankTypeId}")]
+        public IEnumerable<TankMeasurementVM> Get(int TankTypeId)
         {
-            return _tankMeasurementService.GetTankMeasurements().Where(t => t.TankMeasurementTankTypeId == tankMeasurementTankTypeId);
+            return _tankMeasurementService.GetTankMeasurements().Where(t => t.TankTypeId == TankTypeId);
         }
 
         [HttpGet]
-        [Route("{tankMeasurementTankTypeId}/{tankMeasurementTypeId}")]
-        public IEnumerable<TankMeasurementVM> Get(int tankMeasurementTankTypeId, int tankMeasurementTypeId)
+        [Route("{TankTypeId}/{tankMeasurementTypeId}")]
+        public IEnumerable<TankMeasurementVM> Get(int TankTypeId, int tankMeasurementTypeId)
         {
             return _tankMeasurementService.GetTankMeasurements().Where(t =>
-            t.TankMeasurementTankTypeId == tankMeasurementTankTypeId &&
+            t.TankTypeId == TankTypeId &&
             t.TankMeasurementTypeId == tankMeasurementTypeId);
         }
 
