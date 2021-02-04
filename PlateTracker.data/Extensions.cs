@@ -16,6 +16,7 @@ namespace PlateTracker.data
                     .AddTransient<TankMeasurementRepository, TankMeasurementRepository>()
                     .AddTransient<TankTypeRepository, TankTypeRepository>()
                     .AddTransient<TankMeasurementTypesRepository, TankMeasurementTypesRepository>()
+                    .AddTransient<LineRepository, LineRepository>()
 
                     .AddDbContext<TechnicalPlatingContext>(opts =>
                     {

@@ -9,8 +9,8 @@ namespace PlateTracker.data.Models
     {
         public TankType()
         {
+            LineTankTypes = new HashSet<LineTankType>();
             TankMeasurementNominals = new HashSet<TankMeasurementNominal>();
-            TankMeasurements = new HashSet<TankMeasurement>();
         }
 
         public int TankTypeId { get; set; }
@@ -24,7 +24,7 @@ namespace PlateTracker.data.Models
         public string UpdatedBy { get; set; }
 
         public virtual LineType LineType { get; set; }
+        public virtual ICollection<LineTankType> LineTankTypes { get; set; }
         public virtual ICollection<TankMeasurementNominal> TankMeasurementNominals { get; set; }
-        public virtual ICollection<TankMeasurement> TankMeasurements { get; set; }
     }
 }

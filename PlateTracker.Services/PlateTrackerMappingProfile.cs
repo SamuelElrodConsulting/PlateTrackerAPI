@@ -18,6 +18,8 @@ namespace PlateTracker.Services
                 .ReverseMap();
             CreateMap<Employee, EmployeeVM>()
                 .ReverseMap();
+            CreateMap<Line, LineVM>()
+                .ReverseMap();
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -20,7 +19,8 @@ namespace PlateTracker.data.Models
         public DateTime DatetimeCreated { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime DatetimeUpdated { get; set; }
-        public virtual TankType TankType { get; set; }
+
         public virtual TankMeasurementType TankMeasurementType { get; set; }
+        public virtual TankType TankType { get; set; }
     }
 }

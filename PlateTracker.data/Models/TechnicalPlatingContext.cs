@@ -10,21 +10,30 @@ namespace PlateTracker.data.Models
     {
         public TechnicalPlatingContext()
         {
-            this.Database.EnsureCreated();
         }
 
         public TechnicalPlatingContext(DbContextOptions<TechnicalPlatingContext> options)
             : base(options)
         {
-            this.Database.EnsureCreated();
         }
 
         public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<Line> Lines { get; set; }
+        public virtual DbSet<LineTankType> LineTankTypes { get; set; }
         public virtual DbSet<LineType> LineTypes { get; set; }
         public virtual DbSet<TankMeasurement> TankMeasurements { get; set; }
         public virtual DbSet<TankMeasurementNominal> TankMeasurementNominals { get; set; }
-        public virtual DbSet<TankType> TankTypes { get; set; }
         public virtual DbSet<TankMeasurementType> TankMeasurementTypes { get; set; }
+        public virtual DbSet<TankType> TankTypes { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=localhost;Database=TechnicalPlating;Trusted_Connection=True;");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -60,6 +69,92 @@ namespace PlateTracker.data.Models
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Line>(entity =>
+            {
+                entity.ToTable("Line");
+
+                entity.HasIndex(e => e.LineId, "IX_Line");
+
+                entity.Property(e => e.LineId).HasColumnName("LineID");
+
+                entity.Property(e => e.CreatedBy)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('SYSTEM')");
+
+                entity.Property(e => e.DatetimeCreated)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.DatetimeUpdated)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.LineDescription)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LineName)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LineTypeId).HasColumnName("LineTypeID");
+
+                entity.Property(e => e.UpdatedBy)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('SYSTEM')");
+
+                entity.HasOne(d => d.LineType)
+                    .WithMany(p => p.Lines)
+                    .HasForeignKey(d => d.LineTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Line_LineType");
+            });
+
+            modelBuilder.Entity<LineTankType>(entity =>
+            {
+                entity.ToTable("LineTankType");
+
+                entity.Property(e => e.LineTankTypeId).HasColumnName("LineTankTypeID");
+
+                entity.Property(e => e.CreatedBy)
+                    .IsRequired()
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('SYSTEM')");
+
+                entity.Property(e => e.DatetimeCreated)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.DatetimeUpdated)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.LineId).HasColumnName("LineID");
+
+                entity.Property(e => e.TankTypeId).HasColumnName("TankTypeID");
+
+                entity.Property(e => e.UpdatedBy)
+                    .IsRequired()
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('SYSTEM')");
+
+                entity.HasOne(d => d.Line)
+                    .WithMany(p => p.LineTankTypes)
+                    .HasForeignKey(d => d.LineId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_LineTankType_Line");
+
+                entity.HasOne(d => d.TankType)
+                    .WithMany(p => p.LineTankTypes)
+                    .HasForeignKey(d => d.TankTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_LineTankType_LineTankType");
             });
 
             modelBuilder.Entity<LineType>(entity =>
@@ -117,6 +212,8 @@ namespace PlateTracker.data.Models
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
+                entity.Property(e => e.LineTankTypeId).HasColumnName("LineTankTypeID");
+
                 entity.Property(e => e.Notes).IsUnicode(false);
 
                 entity.Property(e => e.TankMeasurementDatetime)
@@ -125,8 +222,6 @@ namespace PlateTracker.data.Models
 
                 entity.Property(e => e.TankMeasurementEmployeeId).HasColumnName("TankMeasurementEmployeeID");
 
-                entity.Property(e => e.TankTypeId).HasColumnName("TankTypeID");
-
                 entity.Property(e => e.TankMeasurementTypeId).HasColumnName("TankMeasurementTypeID");
 
                 entity.Property(e => e.UpdatedBy)
@@ -134,15 +229,15 @@ namespace PlateTracker.data.Models
                     .IsUnicode(false)
                     .HasDefaultValueSql("('SYSTEM')");
 
-                entity.Property(e => e.Value).HasColumnType("decimal(18, 0)");
+                entity.Property(e => e.Value).HasColumnType("decimal(18, 3)");
 
-                entity.HasOne(d => d.TankType)
+                entity.HasOne(d => d.LineTankType)
                     .WithMany(p => p.TankMeasurements)
-                    .HasForeignKey(d => d.TankTypeId)
+                    .HasForeignKey(d => d.LineTankTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_TankMeasurement_TankType");
+                    .HasConstraintName("FK_TankMeasurement_LineTankType");
 
-                entity.HasOne(d => d.Employee)
+                entity.HasOne(d => d.TankMeasurementEmployee)
                     .WithMany(p => p.TankMeasurements)
                     .HasForeignKey(d => d.TankMeasurementEmployeeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -178,9 +273,9 @@ namespace PlateTracker.data.Models
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.TankTypeId).HasColumnName("TankTypeID");
-
                 entity.Property(e => e.TankMeasurementTypeId).HasColumnName("TankMeasurementTypeID");
+
+                entity.Property(e => e.TankTypeId).HasColumnName("TankTypeID");
 
                 entity.Property(e => e.UpdatedBy)
                     .IsRequired()
@@ -188,17 +283,59 @@ namespace PlateTracker.data.Models
                     .IsUnicode(false)
                     .HasDefaultValueSql("('SYSTEM')");
 
-                entity.HasOne(d => d.TankType)
-                    .WithMany(p => p.TankMeasurementNominals)
-                    .HasForeignKey(d => d.TankTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_TankMeasurementNominal_TankMeasurementNominal");
-
                 entity.HasOne(d => d.TankMeasurementType)
                     .WithMany(p => p.TankMeasurementNominals)
                     .HasForeignKey(d => d.TankMeasurementTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TankMeasurementNominal_TankMeasurementType");
+
+                entity.HasOne(d => d.TankType)
+                    .WithMany(p => p.TankMeasurementNominals)
+                    .HasForeignKey(d => d.TankTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TankMeasurementNominal_TankMeasurementNominal");
+            });
+
+            modelBuilder.Entity<TankMeasurementType>(entity =>
+            {
+                entity.ToTable("TankMeasurementType");
+
+                entity.Property(e => e.TankMeasurementTypeId).HasColumnName("TankMeasurementTypeID");
+
+                entity.Property(e => e.CreatedBy)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('SYSTEM')");
+
+                entity.Property(e => e.DatetimeCreated)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.DatetimeUpdated)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.TankMeasurementTypeDescription)
+                    .IsRequired()
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TankMeasurementTypeName)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Uom)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("UOM");
+
+                entity.Property(e => e.UpdatedBy)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('SYSTEM')");
             });
 
             modelBuilder.Entity<TankType>(entity =>
@@ -242,49 +379,7 @@ namespace PlateTracker.data.Models
                     .WithMany(p => p.TankTypes)
                     .HasForeignKey(d => d.LineTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_TankType_LineType");
-            });
-
-            modelBuilder.Entity<TankMeasurementType>(entity =>
-            {
-                entity.ToTable("TankMeasurementType");
-
-                entity.Property(e => e.TankMeasurementTypeId).HasColumnName("TankMeasurementTypeID");
-
-                entity.Property(e => e.CreatedBy)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("('SYSTEM')");
-
-                entity.Property(e => e.DatetimeCreated)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.DatetimeUpdated)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.TankMeasurementTypeDescription)
-                    .IsRequired()
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TankMeasurementTypeName)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Uom)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
-                    .HasColumnName("UOM");
-
-                entity.Property(e => e.UpdatedBy)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("('SYSTEM')");
+                    .HasConstraintName("FK_TankMeasurementTankType_LineType");
             });
 
             OnModelCreatingPartial(modelBuilder);
