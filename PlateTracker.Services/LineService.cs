@@ -32,6 +32,7 @@ namespace PlateTracker.Services
             _lineRepository.GetLines().ToList().ForEach(t =>
             {
                 var result = _mapper.Map<Line, LineVM>(t);
+                result.LineTypeName = t.LineType.LineTypeName;
                 returnValues.Add(result);
             });
 
@@ -52,6 +53,11 @@ namespace PlateTracker.Services
             var LineInsertedAsDTO = _lineRepository.UpdateLine(lineAsDTO);
             var lineAsVM = _mapper.Map<Line, LineVM>(LineInsertedAsDTO);
             return lineAsVM;
+        }
+
+        public bool DeleteLine(int lineToDelete)
+        {
+            return _lineRepository.DeleteLine(lineToDelete);
         }
     }
 }

@@ -49,9 +49,14 @@ namespace PlateTracker.Services
         public LineTypeVM UpdateLineType(LineTypeVM lineTypeToAdd)
         {
             var lineTypeAsDTO = _mapper.Map<LineTypeVM, LineType>(lineTypeToAdd);
-            var lineTypeUpdatedAsDTO = _lineTypeRepository.AddLineType(lineTypeAsDTO);
+            var lineTypeUpdatedAsDTO = _lineTypeRepository.UpdateLineType(lineTypeAsDTO);
             var lineTypeAsVM = _mapper.Map<LineType, LineTypeVM>(lineTypeUpdatedAsDTO);
             return lineTypeAsVM;
+        }
+
+        public bool DeleteLineType(int lineTypeId)
+        {
+            return _lineTypeRepository.DeleteLineType(lineTypeId);
         }
     }
 }

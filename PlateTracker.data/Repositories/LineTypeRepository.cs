@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using PlateTracker.Utilities;
 
 namespace PlateTracker.data.Repositories
 {
@@ -40,6 +41,30 @@ namespace PlateTracker.data.Repositories
             var updateResult = _context.LineTypes.Update(lineTypeToUpdate);
             _context.SaveChanges();
             return updateResult.Entity;
+        }
+
+        public bool DeleteLineType(int lineTypeId)
+        {
+            var entityToDelete = _context.LineTypes.Find(lineTypeId);
+
+            try
+            {
+                if (entityToDelete != null)
+                {
+                    _context.LineTypes.Remove(entityToDelete);
+                    _context.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(Utility.FlattException(ex));
+                return false;
+            }
         }
     }
 }

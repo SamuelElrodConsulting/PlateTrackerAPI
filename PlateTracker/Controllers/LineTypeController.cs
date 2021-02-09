@@ -41,5 +41,11 @@ namespace PlateTracker.Controllers
             var result = _lineTypeService.UpdateLineType(updateLine);
             return result;
         }
+
+        [HttpDelete("{lineTypeId}")]
+        public bool Delete(int lineTypeId)
+        {
+            return _lineTypeService.DeleteLineType(lineTypeId);
+        }
     }
 }

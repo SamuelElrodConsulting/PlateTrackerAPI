@@ -32,6 +32,8 @@ namespace PlateTracker.Services
             _lineTankTypeRepository.GetLineTankTypes().ToList().ForEach(t =>
             {
                 var result = _mapper.Map<LineTankType, LineTankTypeVM>(t);
+                result.LineName = t.Line.LineName;
+                result.TankTypeName = t.TankType.TankTypeName;
                 returnValues.Add(result);
             });
 

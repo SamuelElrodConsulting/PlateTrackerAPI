@@ -8,7 +8,9 @@ namespace PlateTracker.ViewModels
     {
         public int LineTankTypeId { get; set; }
         public int LineId { get; set; }
+        public string LineName { get; set; }
         public int TankTypeId { get; set; }
+        public string TankTypeName { get; set; }
         public int Sequence { get; set; }
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }
