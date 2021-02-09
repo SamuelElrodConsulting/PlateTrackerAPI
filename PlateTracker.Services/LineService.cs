@@ -37,5 +37,21 @@ namespace PlateTracker.Services
 
             return returnValues;
         }
+
+        public LineVM AddLine(LineVM lineToAdd)
+        {
+            var lineAsDTO = _mapper.Map<LineVM, Line>(lineToAdd);
+            var LineInsertedAsDTO = _lineRepository.AddLine(lineAsDTO);
+            var lineAsVM = _mapper.Map<Line, LineVM>(LineInsertedAsDTO);
+            return lineAsVM;
+        }
+
+        public LineVM UpdateLine(LineVM lineToAdd)
+        {
+            var lineAsDTO = _mapper.Map<LineVM, Line>(lineToAdd);
+            var LineInsertedAsDTO = _lineRepository.UpdateLine(lineAsDTO);
+            var lineAsVM = _mapper.Map<Line, LineVM>(LineInsertedAsDTO);
+            return lineAsVM;
+        }
     }
 }

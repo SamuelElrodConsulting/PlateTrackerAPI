@@ -27,6 +27,7 @@ namespace PlateTracker.data.Repositories
             try
             {
                 var result = _context.TankMeasurementTypes.Add(tankMeasurementType);
+                _context.SaveChanges();
                 return result.Entity;
             }
             catch (Exception ex)
@@ -36,11 +37,21 @@ namespace PlateTracker.data.Repositories
             }
         }
 
-        public TankMeasurementType UpdateTankMeasurementType(TankMeasurementType tankMeasurementType)
+        public TankMeasurementType UpdateTankMeasurementType(TankMeasurementType tankMeasurementTypeToUpdate)
         {
             try
             {
-                var result = _context.TankMeasurementTypes.Update(tankMeasurementType);
+                var currentValue = _context.TankMeasurementTypes.First(t => t.TankMeasurementTypeId == tankMeasurementTypeToUpdate.TankMeasurementTypeId);
+                tankMeasurementTypeToUpdate.CreatedBy = currentValue.CreatedBy;
+                tankMeasurementTypeToUpdate.DatetimeCreated = currentValue.DatetimeCreated;
+                tankMeasurementTypeToUpdate.DatetimeUpdated = DateTime.Now;
+                tankMeasurementTypeToUpdate.UpdatedBy = "SYSTEM";
+
+                _context.Entry(currentValue).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+                _context.Entry(tankMeasurementTypeToUpdate).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+
+                var result = _context.TankMeasurementTypes.Update(tankMeasurementTypeToUpdate);
+                _context.SaveChanges();
                 return result.Entity;
             }
             catch (Exception ex)
@@ -59,6 +70,7 @@ namespace PlateTracker.data.Repositories
                 if (entityToDelete != null)
                 {
                     _context.TankMeasurementTypes.Remove(entityToDelete);
+                    _context.SaveChanges();
                     return true;
                 }
                 else

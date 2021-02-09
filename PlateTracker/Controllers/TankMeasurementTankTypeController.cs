@@ -15,20 +15,27 @@ namespace PlateTracker.Controllers
     public class TankTypeController : ControllerBase
     {
         private readonly ILogger<TankTypeController> _logger;
-        private TankTypeService _TankType;
+        private TankTypeService _TankTypeService;
 
         public TankTypeController(
             TankTypeService TankTypeService,
             ILogger<TankTypeController> logger)
         {
             _logger = logger;
-            _TankType = TankTypeService;
+            _TankTypeService = TankTypeService;
         }
 
         [HttpGet]
         public IEnumerable<TankTypeVM> Get()
         {
-            return _TankType.GetTankTypes();
+            return _TankTypeService.GetTankTypes();
+        }
+
+        [HttpGet]
+        [Route("{lineId}")]
+        public IEnumerable<TankTypeVM> Get(int lineID)
+        {
+            return _TankTypeService.GetTankTypesByLineId(lineID);
         }
     }
 }

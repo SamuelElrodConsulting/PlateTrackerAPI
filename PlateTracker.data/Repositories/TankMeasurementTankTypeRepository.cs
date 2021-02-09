@@ -20,5 +20,14 @@ namespace PlateTracker.data.Repositories
         {
             return _context.TankTypes.ToList();
         }
+
+        public IEnumerable<TankType> GetTankTypesByLineId(int lineID)
+        {
+            var result = from ltt in _context.LineTankTypes
+                         join tt in _context.TankTypes on ltt.LineTankTypeId equals tt.TankTypeId
+                         where ltt.LineId == lineID
+                         select tt;
+            return result.ToList();
+        }
     }
 }

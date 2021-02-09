@@ -20,6 +20,10 @@ namespace PlateTracker.Services
                 .ReverseMap();
             CreateMap<Line, LineVM>()
                 .ReverseMap();
+            CreateMap<LineType, LineTypeVM>()
+                .ReverseMap();
+            CreateMap<LineTankType, LineTankTypeVM>()
+                .ReverseMap();
         }
     }
 }

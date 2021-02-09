@@ -29,5 +29,17 @@ namespace PlateTracker.Controllers
         {
             return _lineService.GetLines();
         }
+        [HttpPost]
+        public LineVM Post(LineVM newLine)
+        {
+            var result = _lineService.AddLine(newLine);
+            return result;
+        }
+        [HttpPut]
+        public LineVM Put(LineVM updateLine)
+        {
+            var result = _lineService.UpdateLine(updateLine);
+            return result;
+        }
     }
 }

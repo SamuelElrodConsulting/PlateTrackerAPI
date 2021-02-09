@@ -8,8 +8,6 @@ namespace PlateTracker.Utilities
         public static string FlattException(Exception ex)
         {
             return ex.ToString();
-        }
-
-        
+        } 
     }
 }

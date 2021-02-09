@@ -37,5 +37,26 @@ namespace PlateTracker.Services
 
             return returnValues;
         }
+
+        public TankMeasurementTypeVM AddTankMeasurementType(TankMeasurementTypeVM measurementTypeToAdd)
+        {
+            var measurementTypeToAddDTO = _mapper.Map<TankMeasurementTypeVM, TankMeasurementType>(measurementTypeToAdd);
+            var dtoResult = _tankMeasurementTypesRepository.AddTankMeasurementType(measurementTypeToAddDTO);
+            var vmResult = _mapper.Map<TankMeasurementType, TankMeasurementTypeVM>(dtoResult);
+            return vmResult;
+        }
+
+        public TankMeasurementTypeVM UpdateTankMeasurementType(TankMeasurementTypeVM measurementTypeToUpdate)
+        {
+           var measurementTypeToUpdateDTO = _mapper.Map<TankMeasurementTypeVM, TankMeasurementType>(measurementTypeToUpdate);
+            var dtoResult = _tankMeasurementTypesRepository.UpdateTankMeasurementType(measurementTypeToUpdateDTO);
+            var vmResult = _mapper.Map<TankMeasurementType, TankMeasurementTypeVM>(dtoResult);
+            return vmResult;
+        }
+
+        public Boolean DeleteTankMeasurementType(int tankMeasurementTypeID)
+        {
+            return _tankMeasurementTypesRepository.DeleteTankMeasurementType(tankMeasurementTypeID);
+        }
     }
 }
