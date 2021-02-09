@@ -28,16 +28,16 @@ namespace PlateTracker.data.Repositories
             _context.SaveChanges();
             return addResult.Entity;
         }
-        public Line UpdateLine(Line LineToUpdate)
+        public Line UpdateLine(Line lineToUpdate)
         {
-            var currentValue = _context.Lines.First(n => n.LineId == LineToUpdate.LineId);
-            LineToUpdate.CreatedBy = currentValue.CreatedBy;
-            LineToUpdate.DatetimeCreated = currentValue.DatetimeCreated;
-            LineToUpdate.DatetimeUpdated = DateTime.Now;
-            LineToUpdate.UpdatedBy = "SYSTEM";
+            var currentValue = _context.Lines.First(n => n.LineId == lineToUpdate.LineId);
+            lineToUpdate.CreatedBy = currentValue.CreatedBy;
+            lineToUpdate.DatetimeCreated = currentValue.DatetimeCreated;
+            lineToUpdate.DatetimeUpdated = DateTime.Now;
+            lineToUpdate.UpdatedBy = "SYSTEM";
             _context.Entry(currentValue).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
-            _context.Entry(LineToUpdate).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            var updateResult = _context.Lines.Update(LineToUpdate);
+            _context.Entry(lineToUpdate).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            var updateResult = _context.Lines.Update(lineToUpdate);
             _context.SaveChanges();
             return updateResult.Entity;
         }
