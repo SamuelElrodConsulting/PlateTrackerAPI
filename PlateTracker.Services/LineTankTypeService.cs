@@ -51,7 +51,7 @@ namespace PlateTracker.Services
         public LineTankTypeVM UpdateLineTankType(LineTankTypeVM lineTankTypeToAdd)
         {
             var lineTankTypeAsDTO = _mapper.Map<LineTankTypeVM, LineTankType>(lineTankTypeToAdd);
-            var lineTankTypeUpdatedAsDTO = _lineTankTypeRepository.AddLineTankType(lineTankTypeAsDTO);
+            var lineTankTypeUpdatedAsDTO = _lineTankTypeRepository.UpdateLineTankType(lineTankTypeAsDTO);
             var lineTankTypeAsVM = _mapper.Map<LineTankType, LineTankTypeVM>(lineTankTypeUpdatedAsDTO);
             return lineTankTypeAsVM;
         }

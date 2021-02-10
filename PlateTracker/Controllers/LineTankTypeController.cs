@@ -29,6 +29,14 @@ namespace PlateTracker.Controllers
         {
             return _lineTypeService.GetLineTankTypes();
         }
+
+        [HttpGet]
+        [Route("{lineId}")]
+        public IEnumerable<LineTankTypeVM> Get(int lineId)
+        {
+            return _lineTypeService.GetLineTankTypes().Where(l => l.LineId == lineId);
+
+        }
         [HttpPost]
         public LineTankTypeVM Post(LineTankTypeVM newLine)
         {

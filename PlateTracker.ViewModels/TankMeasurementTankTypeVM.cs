@@ -10,6 +10,7 @@ namespace PlateTracker.ViewModels
         public string TankTypeName { get; set; }
         public string TankTypeDescription { get; set; }
         public int LineTypeId { get; set; }
+        public string LineTypeName { get; set; }
         public DateTime DatetimeCreated { get; set; }
         public DateTime DatetimeUpdated { get; set; }
         public bool Deleted { get; set; }

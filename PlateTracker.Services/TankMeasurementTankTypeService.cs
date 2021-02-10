@@ -13,26 +13,27 @@ namespace PlateTracker.Services
     public class TankTypeService
     {
         ILogger<TankTypeService> _logger;
-        TankTypeRepository _TankTypeRepository;
+        TankTypeRepository _tankTypeRepository;
         IMapper _mapper;
 
         public TankTypeService(
-            TankTypeRepository TankTypeRepository,
+            TankTypeRepository tankTypeRepository,
             IMapper mapper,
             ILogger<TankTypeService> logger)
         {
             _mapper = mapper;
             _logger = logger;
-            _TankTypeRepository = TankTypeRepository;
+            _tankTypeRepository = tankTypeRepository;
         }
 
         public IEnumerable<TankTypeVM> GetTankTypesByLineId(int lineId)
         {
             List<TankTypeVM> returnValues = new List<TankTypeVM>();
 
-            _TankTypeRepository.GetTankTypesByLineId(lineId).ToList().ForEach(l =>
+            _tankTypeRepository.GetTankTypesByLineId(lineId).ToList().ForEach(l =>
             {
                 var tankTypeAsVM = _mapper.Map<TankType, TankTypeVM>(l);
+                tankTypeAsVM.LineTypeName = l.LineType.LineTypeName;
                 returnValues.Add(tankTypeAsVM);
             });
             return returnValues;
@@ -41,14 +42,36 @@ namespace PlateTracker.Services
         {
             List<TankTypeVM> returnValues = new List<TankTypeVM>();
 
-            var tankTypesAsDTO = _TankTypeRepository.GetTankTypes();
+            var tankTypesAsDTO = _tankTypeRepository.GetTankTypes();
             tankTypesAsDTO.ToList().ForEach(n =>
             {
                 var tankTypeAsVM = _mapper.Map<TankType, TankTypeVM>(n);
+                tankTypeAsVM.LineTypeName = n.LineType.LineTypeName;
                 returnValues.Add(tankTypeAsVM);
             });
 
             return returnValues;
+        }
+
+        public TankTypeVM AddTankType(TankTypeVM tankTypeToAdd)
+        {
+            var tankTypeAsDTO = _mapper.Map<TankTypeVM, TankType>(tankTypeToAdd);
+            var tankTypeInsertedAsDTO = _tankTypeRepository.AddTankType(tankTypeAsDTO);
+            var tankTypeAsVM = _mapper.Map<TankType, TankTypeVM>(tankTypeInsertedAsDTO);
+            return tankTypeAsVM;
+        }
+
+        public TankTypeVM UpdateTankType(TankTypeVM tankTypeToAdd)
+        {
+            var tankTypeAsDTO = _mapper.Map<TankTypeVM, TankType>(tankTypeToAdd);
+            var tankTypeUpdatedAsDTO = _tankTypeRepository.UpdateTankType(tankTypeAsDTO);
+            var tankTypeAsVM = _mapper.Map<TankType, TankTypeVM>(tankTypeUpdatedAsDTO);
+            return tankTypeAsVM;
+        }
+
+        public bool DeleteTankType(int tankTypeId)
+        {
+            return _tankTypeRepository.DeleteTankType(tankTypeId);
         }
     }
 }
