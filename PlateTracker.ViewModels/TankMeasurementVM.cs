@@ -15,6 +15,7 @@ namespace PlateTracker.ViewModels
         public string TankTypeName { get; set; }
         public string EmployeeName { get; set; }
 
+        public int TankTypeId { get; set; }
         public string TankMeasurementDescription { get; set; }
         public decimal Value { get; set; }
         public string Notes { get; set; }

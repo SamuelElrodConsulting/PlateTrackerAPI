@@ -38,6 +38,18 @@ namespace PlateTracker.Services
             });
             return returnValues;
         }
+        public IEnumerable<TankTypeVM> GetTankTypesByLineTypeId(int lineTypeId)
+        {
+            List<TankTypeVM> returnValues = new List<TankTypeVM>();
+
+            _tankTypeRepository.GetTankTypesByLineTypeId(lineTypeId).ToList().ForEach(l =>
+            {
+                var tankTypeAsVM = _mapper.Map<TankType, TankTypeVM>(l);
+                tankTypeAsVM.LineTypeName = l.LineType.LineTypeName;
+                returnValues.Add(tankTypeAsVM);
+            });
+            return returnValues;
+        }
         public IEnumerable<TankTypeVM> GetTankTypes()
         {
             List<TankTypeVM> returnValues = new List<TankTypeVM>();

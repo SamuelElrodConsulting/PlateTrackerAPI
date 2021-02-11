@@ -55,5 +55,18 @@ namespace PlateTracker.Services
             var nominalAsVM = _mapper.Map<TankMeasurementNominal, TankMeasurementNominalVM>(nominalUpdatedAsDTO);
             return nominalAsVM;
         }
+
+        public bool DeleteTankMeasurementNominal(int nominalId)
+        {
+            try
+            {
+                _tankMeasuremenNominalRepository.DeleteNominal(nominalId);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

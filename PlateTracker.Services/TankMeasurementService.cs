@@ -13,17 +13,20 @@ namespace PlateTracker.Services
     public class TankMeasurementService
     {
         private TankMeasurementRepository _tankMeasurementRepository;
+        private LineTankTypeRepository _lineTankTypeRepository;
         private TankMeasurementNominalRepository _tankMeasurementNominalRepository;
         private IMapper _mapper;
         private ILogger<TankMeasurementService> _logger;
         public TankMeasurementService(
             TankMeasurementRepository tankMeasurementRepository,
             TankMeasurementNominalRepository tankMeasurementNominalRepository,
+            LineTankTypeRepository lineTankTypeRepository,
             IMapper mapper,
             ILogger<TankMeasurementService> logger)
         {
             _tankMeasurementRepository = tankMeasurementRepository;
             _tankMeasurementNominalRepository = tankMeasurementNominalRepository;
+            _lineTankTypeRepository = lineTankTypeRepository;
             _mapper = mapper;
             _logger = logger;
         }
@@ -43,7 +46,7 @@ namespace PlateTracker.Services
                 measurementAsVM.EmployeeName = n.TankMeasurementEmployee.EmployeeFirstName + " " + n.TankMeasurementEmployee.EmployeeLastName;
                 measurementAsVM.LineName = n.LineTankType.Line.LineName;
                 measurementAsVM.LineID = n.LineTankType.LineId;
-                
+                measurementAsVM.TankTypeId = n.LineTankType.TankTypeId;
                 var nominal = _tankMeasurementNominalRepository.GetTankMeasurementNominal(n.LineTankType.TankTypeId, n.TankMeasurementTypeId);
                 if (nominal != null)
                 {
@@ -71,6 +74,9 @@ namespace PlateTracker.Services
 
         public TankMeasurementVM AddTankMeasurement(TankMeasurementVM tmToAdd)
         {
+            //get lineTankTypeId from LineId and TankTypeId
+            tmToAdd.LineTankTypeId = _lineTankTypeRepository.GetLineTankType(tmToAdd.LineID, tmToAdd.TankTypeId).LineTankTypeId;
+            //---------------------------------------------
             var tmAsDTO = _mapper.Map<TankMeasurementVM, TankMeasurement>(tmToAdd);
             var tmInsertedAsDTO = _tankMeasurementRepository.AddTankMeasurement(tmAsDTO);
             var tmAsVM = _mapper.Map<TankMeasurement, TankMeasurementVM>(tmInsertedAsDTO);

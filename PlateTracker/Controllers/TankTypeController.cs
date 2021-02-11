@@ -48,6 +48,7 @@ namespace PlateTracker.Controllers
             return _tankTypeService.UpdateTankType(tankType);
         }
         [HttpDelete]
+        [Route("{tankTypeId}")]
         public bool Delete(int tankTypeId)
         {
             return _tankTypeService.DeleteTankType(tankTypeId);

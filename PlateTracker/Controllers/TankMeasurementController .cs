@@ -43,8 +43,11 @@ namespace PlateTracker.Controllers
         [Route("{TankTypeId}/{tankMeasurementTypeId}")]
         public IEnumerable<TankMeasurementVM> Get(int TankTypeId, int tankMeasurementTypeId)
         {
-            return _tankMeasurementService.GetTankMeasurements().Where(t =>
-            t.LineTankTypeId == TankTypeId &&
+            //implement iqueryable later
+            var tankMeasurements = _tankMeasurementService.GetTankMeasurements();
+            
+            return tankMeasurements.Where(t =>
+            t.TankTypeId == TankTypeId &&
             t.TankMeasurementTypeId == tankMeasurementTypeId);
         }
 

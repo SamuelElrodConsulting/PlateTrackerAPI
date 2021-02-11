@@ -41,5 +41,12 @@ namespace PlateTracker.Controllers
             var result = _tankMeasurementNominalService.UpdateTankMeasurementNominal(updateNominal);
             return result;
         }
+        [HttpDelete]
+        [Route("{nominalId}")]
+        public bool Delete(int nominalId)
+        {
+            var result = _tankMeasurementNominalService.DeleteTankMeasurementNominal(nominalId);
+            return result;
+        }
     }
 }

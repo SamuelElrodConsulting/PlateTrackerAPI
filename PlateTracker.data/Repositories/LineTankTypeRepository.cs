@@ -22,6 +22,15 @@ namespace PlateTracker.data.Repositories
             return _context.LineTankTypes.ToList();
         }
 
+        public LineTankType GetLineTankType(int lineId, int tankTypeId)
+        {
+            return _context.LineTankTypes.FirstOrDefault(l =>
+            
+                l.LineId == lineId
+                && l.TankTypeId == tankTypeId
+            );
+        }
+
         public LineTankType AddLineTankType(LineTankType lineTankType)
         {
             var addResult = _context.LineTankTypes.Add(lineTankType);

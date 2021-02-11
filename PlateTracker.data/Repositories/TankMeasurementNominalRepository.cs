@@ -4,6 +4,7 @@ using System.Text;
 using System.Linq;
 using PlateTracker.data.Models;
 using Microsoft.Extensions.Logging;
+using PlateTracker.Utilities;
 
 namespace PlateTracker.data.Repositories
 {
@@ -47,6 +48,30 @@ namespace PlateTracker.data.Repositories
             var updateResult = _context.TankMeasurementNominals.Update(nominalToUpdate);
             _context.SaveChanges();
             return updateResult.Entity;
+        }
+
+        public bool DeleteNominal(int nominalId)
+        {
+            var entityToDelete = _context.TankMeasurementNominals.Find(nominalId);
+
+            try
+            {
+                if (entityToDelete != null)
+                {
+                    _context.TankMeasurementNominals.Remove(entityToDelete);
+                    _context.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(Utility.FlattException(ex));
+                return false;
+            }
         }
     }
 }
