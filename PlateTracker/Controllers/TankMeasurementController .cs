@@ -48,7 +48,7 @@ namespace PlateTracker.Controllers
             
             return tankMeasurements.Where(t =>
             t.TankTypeId == TankTypeId &&
-            t.TankMeasurementTypeId == tankMeasurementTypeId);
+            t.TankMeasurementTypeId == tankMeasurementTypeId).OrderBy(m => m.TankMeasurementDatetime);
         }
 
         [HttpPost]

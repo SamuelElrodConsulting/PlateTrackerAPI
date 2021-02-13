@@ -17,6 +17,7 @@ namespace PlateTracker.Services
                     .AddTransient<LineService, LineService>()
                     .AddTransient<LineTypeService, LineTypeService>()
                     .AddTransient<LineTankTypeService, LineTankTypeService>()
+                    .AddTransient<ChartService, ChartService>()
 
                     .AddAutoMapper(typeof(PlateTrackerMappingProfile).Assembly);
         }

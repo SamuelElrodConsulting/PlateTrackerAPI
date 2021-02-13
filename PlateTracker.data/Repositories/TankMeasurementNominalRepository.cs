@@ -22,6 +22,12 @@ namespace PlateTracker.data.Repositories
             return _context.TankMeasurementNominals.ToList();
         }
 
+        public TankMeasurementNominal GetTankMeasurementNominal(int tankMEasurementNominalId)
+        {
+            var value = _context.TankMeasurementNominals.FirstOrDefault(n =>
+                n.TankMeasurementNominalId == tankMEasurementNominalId);
+            return value;
+        }
         public TankMeasurementNominal GetTankMeasurementNominal(int tankTypeId, int tankMeasurementTypeId)
         {
             var value = _context.TankMeasurementNominals.FirstOrDefault(n =>
